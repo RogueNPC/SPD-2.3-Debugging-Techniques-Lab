@@ -5,6 +5,7 @@
 
 <a href="/order">+ New Order</a>
 
+<!-- {% if pizza in pizza_orders %} -->
 {% for pizza in pizza_orders %}
 <div class="pizza_order">
     <p>
@@ -32,7 +33,9 @@
         <input type="submit" value="Fulfill Order">
     </form>
 </div>
+{% endfor %}
+
 {% else %}
 <p>No pizza orders to show!</p>
-{% endfor %}
+{% endif %}
 {% endblock %}
