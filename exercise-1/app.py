@@ -68,17 +68,17 @@ def pizza_order_submit():
     pizza_size_str = request.form.get('pizza_size')
     crust_type_str = request.form.get('crust_type')
     # Get this toppings_list to be a list and not a string
-    toppings_list = request.form.get('toppings')
+    toppings_list = request.form.getlist('toppings')
 
     pizza = Pizza(
         order_name=order_name,
         size=pizza_size_str,
         crust_type=crust_type_str,
-        toppings=toppings_list)
+        toppings=[])
     print(pizza.size)
 
     for topping_str in toppings_list:
-        pizza.toppings.append(topping_str)
+        pizza.toppings.append(PizzaTopping(topping_type=topping_str))
 
     db.session.add(pizza)
     db.session.commit()
