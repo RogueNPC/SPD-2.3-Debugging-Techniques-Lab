@@ -37,7 +37,15 @@ After all that I noticed nothing was showing up on the homepage, so doing Divide
 
 ## Exercise 2
 
-[[Your answer goes here!]]
+The first bug after clicking submit was File "/exercise-2/app.py", line 52, in results 'city': result_js ['name'], KeyError: 'name'.  Looking at line 52, I see that that it involves the weather API so I decided to take a peek into the result_json to see if it was getting the data... and I get {'cod': '400', 'message': 'Nothing to geocode'}.  After finding no problems with the API call, I traced backwards checking to see if there was something wrong with the city and units being requested from the user form... which there was, there were no city or units being obtained.  The problem was that the html form in home.html was entering the city under 'city' and units under 'units', but on line 40 of app.py, thery were called 'users_city' and 'requested_units'.  After changing those, I was getting the city and units entered by the user.
+
+I also noticed on line 44, the API_KEY was being passed in as a global variable and not from the .env file.  I used os.getenv('API_KEY') instead to get that working.
+
+I was still getting the {'cod': '400', 'message': 'Nothing to geocode'} bug so I ended up scouring the API documentation on the openweathermap webpage and I realized that the parameter for city name has to be 'q' and not 'city' on line 45 of app.py.  After replacing city with q, I was able to get the API call working.
+
+Another bug appeared on line 56 with 'temp': result_json['main']['temperature'], KeyError: 'temperature'.  Checking the documentation again I see that temperature is stored under the varaible 'temp' so I changed line 56 to 'temp': result_json['main']['temp'].
+
+After that bug fix, it returned the result page successfully.
 
 ## Exercise 3
 
