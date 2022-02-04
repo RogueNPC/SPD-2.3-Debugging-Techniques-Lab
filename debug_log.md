@@ -49,4 +49,14 @@ After that bug fix, it returned the result page successfully.
 
 ## Exercise 3
 
-[[Your answer goes here!]]
+The stack trace revealed that there was an IndexError: list index out of range within the merge_sort function.  After doing a trace forward through the function, I noticed that line 19 and 20 both recursivly call merge_sort outside of a recursive case resulting in an infinite loop.  To fix this, we can create our recursive case if-statement "if len(arrr) > 1:" and place all of our recursive code inside.
+
+I was still getting the IndexError: list index out of range so I went through the code line-by-line to find out that on line 38, the variable i should have been a j.
+
+The sorted list is returning the last element twice, I can trace backwards to find the problem... and we can see that the while loops on line 34 and line 38 both involve replacing the sorted arrays onto our main array on index k however the variable k is not being incremented throughout the while loop.  We can make it so that k is incremented at the end of every while loop to ensure the merge is being inserted in the right place.
+
+Lastly, the merge sort is sorting from greatest to least instead of least to greatest.  Doing a Divide and Conquer, I can see that on line 24 I can switch the greater than operator to a less than operator so that the left half of the array will obtain the lower valued numbers than the right half.
+
+We get another error when running our binary_search function.  Our stack trace tells us that there is a TypeError: list indices must be integers or slices, not float.  Doing a trace forward, we can understand our function better.  We enter the while loop and we assign our mid value to be the number between our high and low value... using a print function we see that our mid variable is assigned 3.5 which is a float and cannot be used as an index in our array.  We can change the equation on line 51 to be an integer division.
+
+After running again we get a -1 returned for the element 5 which is untrue, we expect to get the index 4. Using trace forward once more, we can see that the low and high variables both meet at 4 which is our expected return value, but because the while loop on line 49 expects low to be less than high, we get our not found return before checking if the element we are searching for is at index 4.  We fix this by changing line 49 to "while low <= high:" which fixed the problem.
